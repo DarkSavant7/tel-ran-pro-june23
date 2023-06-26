@@ -1,6 +1,6 @@
-package de.telran.practice.lectures.oop;
+package de.telran.practice.lectures.oop.base;
 
-import de.telran.practice.lectures.oop.animals.Cat;
+import de.telran.practice.lectures.oop.base.animals.Cat;
 
 public class OopExample {
 
