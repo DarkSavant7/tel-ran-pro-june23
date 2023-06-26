@@ -1,4 +1,4 @@
-package de.telran.practice.lectures.oop;
+package de.telran.practice.lectures.oop.enums;
 
 public enum DayOfMonth {
   SUNDAY(10),
@@ -17,6 +17,15 @@ public enum DayOfMonth {
 
   public int getNumber() {
     return number;
+  }
+
+  public static DayOfMonth getByNumber(int number) {
+    for (DayOfMonth day : DayOfMonth.values()) {
+      if (day.number == number) {
+        return day;
+      }
+    }
+    throw new IllegalArgumentException("There's no such day with number " + number);
   }
 
   @Override

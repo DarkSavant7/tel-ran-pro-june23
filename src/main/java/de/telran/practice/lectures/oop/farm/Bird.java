@@ -1,4 +1,4 @@
-package de.telran.practice.lectures.oop;
+package de.telran.practice.lectures.oop.farm;
 
 public class Bird extends Animal {
 

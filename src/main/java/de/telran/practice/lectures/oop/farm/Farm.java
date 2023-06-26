@@ -1,9 +1,37 @@
-package de.telran.practice.lectures.oop;
+package de.telran.practice.lectures.oop.farm;
 
 public class Farm {
 
   public static void main(String[] args) {
-//    Cat cat = new Cat("Barsik", "Black");
+//    animalsExample();
+
+    Animal[] animals = {
+        new Cat("Barsik", "Black"),
+        new Dog("Bobik", "Red"),
+        new Bird("Chizhik", "Grey"),
+        new Cat("Murzik", "White"),
+        new Bird("Tuco", "Yellow"),
+        new Bird("Null", null),
+        new Snake("Kaa", "Green"),
+        new Parrot("Kesha", "Blue")
+    };
+
+//    for (Animal animal : animals) {
+//      if (animal.getColor().name().equalsIgnoreCase("Black ")) {
+//        System.out.println(animal);
+//      }
+//    }
+
+    for (Animal animal : animals) {
+      if (animal.getColor() == AnimalColor.BLACK) {
+        System.out.println(animal);
+      }
+    }
+
+  }
+
+  private static void animalsExample() {
+    //    Cat cat = new Cat("Barsik", "Black");
 //    cat.move();
 //    cat.voice();
 //    Dog dog = new Dog("Bobik", "Red");
@@ -13,9 +41,9 @@ public class Farm {
 //    bird.move();
 //    bird.voice();
     System.out.println("Creating random animals:");
-    Cat someCat = new Cat("Some", "Some");
-    Animal someAnimal = new Cat("Some", "Some");
-    Object someObject = new Cat("Some", "Some");
+    Cat someCat = new Cat("Some", "WhItE");
+    Animal someAnimal = new Cat("Some", "blACK");
+    Object someObject = new Cat("Some", "grey");
 //    Animal abs = new Animal("Some", "Some", "SOme");
 
     System.out.println();
