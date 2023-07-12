@@ -10,18 +10,15 @@
   xmlns:fx="http://javafx.com/fxml"
   fx:controller="de.telran.filemanager.PanelController">
 
-  <children>
-    <HBox>
-      <ComboBox fx:id="diskBox" onAction="#selectDisk"/>
-      <TextField fx:id="pathField" HBox.hgrow="ALWAYS" editable="false"/>
-      <Button text="UP" onAction="#buttonUp"/>
-    </HBox>
-    <TableView fx:id="table" VBox.vgrow="ALWAYS"/>
-  </children>
-
   <properties>
     <ctrl>
       <fx:reference source="controller"/>
     </ctrl>
   </properties>
+  <HBox>
+    <ComboBox fx:id="diskBox" onAction="#selectDisk"/>
+    <TextField fx:id="pathField" HBox.hgrow="ALWAYS" editable="false"/>
+    <Button text="UP" onAction="#buttonUp"/>
+  </HBox>
+  <TableView fx:id="table" VBox.vgrow="ALWAYS"/>
 </VBox>

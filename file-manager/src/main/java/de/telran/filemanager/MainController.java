@@ -20,4 +20,7 @@ public class MainController {
   public void buttonMove(ActionEvent actionEvent) {
 
   }
+
+  public void buttonDelete(ActionEvent actionEvent) {
+  }
 }
