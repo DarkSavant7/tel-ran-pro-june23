@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class DatabaseExample {
     private static Connection connection;
     private static Statement statement;
-    private static PreparedStatement ps;
+    private static PreparedStatement preparedStatement;
     private static String insertStatement = "insert into students (name, score) values (?, ?);";
     private static String exampleCall = "{call do_something_prc(?,?,?)}";
 
@@ -20,15 +20,15 @@ public class DatabaseExample {
             connect();
             createDB();
 //            dropTable();
-//            simpleInsert();
-//            simpleDelete();
-//            simpleUpdate();
-//            simpleRead();
-//            notReallyCorrectInsert("Petya Petrov", 75);
+            simpleInsert();
+            simpleDelete();
+            simpleUpdate();
+            simpleRead();
+            notReallyCorrectInsert("Petya Petrov", 75);
 //            notReallyCorrectInsert("Sidor Sidorov", 75);
 //            notReallyCorrectInsert("Sidor Sidorov', 75); delete from students;", 75);
 //            preparedInsert("Sidor Sidorov", 75);
-//            preparedInsert("Sidor Sidorov', 75); delete from students;", 75);
+            preparedInsert("Sidor Sidorov', 75); delete from students;", 75);
 //            massInsertExample();
             batchInsertExample();
         } catch (SQLException e) {
@@ -42,11 +42,11 @@ public class DatabaseExample {
         connection.setAutoCommit(false);
         long start = System.currentTimeMillis();
         for (int i = 0; i < 5000; i++) {
-            ps.setString(1, "Student# " + i);
-            ps.setInt(2, i);
-            ps.addBatch();
+            preparedStatement.setString(1, "Student# " + i);
+            preparedStatement.setInt(2, i);
+            preparedStatement.addBatch();
         }
-        ps.executeBatch();
+        preparedStatement.executeBatch();
         connection.setAutoCommit(true);
         System.out.println(System.currentTimeMillis() - start);
     }
@@ -66,9 +66,9 @@ public class DatabaseExample {
     }
 
     private static void preparedInsert(String name, int score) throws SQLException {
-        ps.setString(1, name);
-        ps.setInt(2, score);
-        ps.executeUpdate();
+        preparedStatement.setString(1, name);
+        preparedStatement.setInt(2, score);
+        preparedStatement.executeUpdate();
     }
 
     private static void notReallyCorrectInsert(String name, int score) throws SQLException {
@@ -76,7 +76,7 @@ public class DatabaseExample {
     }
 
     private static void simpleRead() throws SQLException {
-        try (ResultSet resultSet = statement.executeQuery("select name, score from students;")) {
+        try (ResultSet resultSet = statement.executeQuery("select name as student_name, score from students;")) {
             while (resultSet.next()) {
                 System.out.printf("Student: %s score %s\n",
                         resultSet.getString(1),
@@ -105,8 +105,10 @@ public class DatabaseExample {
 
     private static void createDB() throws SQLException {
         statement = connection.createStatement();
+//        statement = connection.prepareStatement();
+//        statement = connection.prepareCall();
         statement.execute("create table if not exists students (id integer primary key autoincrement, name text, score integer);");
-        ps = connection.prepareStatement(insertStatement);
+        preparedStatement = connection.prepareStatement(insertStatement);
 //        CallableStatement cs = connection.prepareCall(exampleCall);
     }
 
@@ -124,7 +126,7 @@ public class DatabaseExample {
         }
 
         try {
-            if (ps != null) ps.close();
+            if (preparedStatement != null) preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
