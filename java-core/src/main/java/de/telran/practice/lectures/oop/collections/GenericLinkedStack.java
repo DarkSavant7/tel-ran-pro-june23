@@ -2,30 +2,29 @@ package de.telran.practice.lectures.oop.collections;
 
 import java.util.NoSuchElementException;
 
-public class LinkedStack {
+public class GenericLinkedStack<E> {
 
-  private Node first;
+  private Node<E> first;
   private int size;
 
-  public LinkedStack() {
+  public GenericLinkedStack() {
     this.size = 0;
   }
 
-  public void push(String element) {
+  public void push(E element) {
     if (first == null) {
-      first = new Node(element, null);
+      first = new Node<>(element, null);
     } else {
-      Node node = new Node(element, first);
-      this.first = node;
+      this.first = new Node<>(element, first);
     }
     size++;
   }
 
-  public String pop() {
+  public E pop() {
     if (first == null) {
       throw new NoSuchElementException();
     }
-    Node result = first;
+    Node<E> result = first;
     this.first = result.next;
     size--;
     return result.element;
@@ -35,11 +34,11 @@ public class LinkedStack {
     return size;
   }
 
-  static class Node {
-    String element;
-    Node next;
+  static class Node<E> {
+    E element;
+    Node<E> next;
 
-    public Node(String element, Node next) {
+    public Node(E element, Node<E> next) {
       this.element = element;
       this.next = next;
     }
