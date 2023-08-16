@@ -1,41 +1,48 @@
 package de.telran.practice.lectures.oop.graph;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class WeightedGraph {
 
-  private List<List<Node>> list = new ArrayList<>();
+  private Map<Integer, List<Node>> interconnectionTable = new HashMap<>();
 
   public WeightedGraph(List<WeightedEdge> edges) {
-    int acme = 0;
     for (WeightedEdge edge : edges) {
-      acme = Integer.max(acme, Integer.max(edge.source, edge.destination));
+      interconnectionTable.putIfAbsent(edge.source, new ArrayList<>());
+      interconnectionTable.putIfAbsent(edge.destination, new ArrayList<>());
     }
-    for (int i = 0; i < acme; i++) {
-      list.add(i, new ArrayList<>());
-    }
-
     for (WeightedEdge edge : edges) {
-      list.get(edge.getSource()).add(new Node(edge.getDestination(), edge.getWeight()));
+      interconnectionTable.get(edge.getSource())
+          .add(new Node(edge.getDestination(), edge.getWeight()));
     }
   }
 
-  public List<List<Node>> getList() {
-    return list;
+  public void removeVertex(int value) {
+    interconnectionTable.remove(value);
+    var connections = interconnectionTable.values();
+    connections.forEach(c -> c.removeIf(node -> node.value == value));
+  }
+
+  public Map<Integer, List<Node>> getInterconnectionTable() {
+    return interconnectionTable;
   }
 
   public void print() {
-    int pointer = 0;
-    int size = list.size();
-    do {
-      for (Node node : list.get(pointer)) {
-        System.out.printf("[ %s -->> %s ]", pointer, node);
-      }
-      System.out.println();
-      pointer++;
-    } while (pointer < size);
+
+    interconnectionTable.forEach((k, v) -> System.out.printf("[ %s -->> %s ]%n", k, v));
+//    int pointer = 0;
+//    int size = interconnectionTable.size();
+//    do {
+//      for (Node node : interconnectionTable.get(pointer)) {
+//        System.out.printf("[ %s -->> %s ]", pointer, node);
+//      }
+//      System.out.println();
+//      pointer++;
+//    } while (pointer < size);
   }
 
   public static class Node {

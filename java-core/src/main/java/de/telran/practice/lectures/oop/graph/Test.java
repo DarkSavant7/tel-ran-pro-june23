@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Test {
+
   public static void main(String[] args) {
 //    firstGraphTest();
     List<WeightedGraph.WeightedEdge> edges = new ArrayList<>();
@@ -17,23 +18,30 @@ public class Test {
     edges.add(new WeightedEdge(2, 1, 4));
     edges.add(new WeightedEdge(2, 3, 23));
     edges.add(new WeightedEdge(2, 0, 8));
+
+    WeightedGraph graph = new WeightedGraph(edges);
+    graph.print();
+
+    graph.removeVertex(0);
+    System.out.println("====================================================\n\n");
+    graph.print();
   }
 
   private static void firstGraphTest() {
     Set<Edge> edges = new HashSet<>();
 
-    edges.add(new Edge(0,3));
-    edges.add(new Edge(1,2));
-    edges.add(new Edge(1,6));
-    edges.add(new Edge(2,1));
-    edges.add(new Edge(2,3));
-    edges.add(new Edge(2,4));
-    edges.add(new Edge(3,0));
-    edges.add(new Edge(3,2));
-    edges.add(new Edge(4,2));
-    edges.add(new Edge(4,5));
-    edges.add(new Edge(5,4));
-    edges.add(new Edge(6,1));
+    edges.add(new Edge(0, 3));
+    edges.add(new Edge(1, 2));
+    edges.add(new Edge(1, 6));
+    edges.add(new Edge(2, 1));
+    edges.add(new Edge(2, 3));
+    edges.add(new Edge(2, 4));
+    edges.add(new Edge(3, 0));
+    edges.add(new Edge(3, 2));
+    edges.add(new Edge(4, 2));
+    edges.add(new Edge(4, 5));
+    edges.add(new Edge(5, 4));
+    edges.add(new Edge(6, 1));
 
     Graph graph = new Graph(edges);
     System.out.println();
