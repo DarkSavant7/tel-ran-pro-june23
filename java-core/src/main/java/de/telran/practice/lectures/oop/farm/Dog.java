@@ -11,4 +11,13 @@ public class Dog extends Animal {
   public void voice() {
     System.out.printf("%s dog %s barks%n", color, name);
   }
+
+  @Override
+  public String toString() {
+    return "Dog{" +
+        "name='" + name + '\'' +
+        ", color=" + color +
+        ", type='" + type + '\'' +
+        '}';
+  }
 }

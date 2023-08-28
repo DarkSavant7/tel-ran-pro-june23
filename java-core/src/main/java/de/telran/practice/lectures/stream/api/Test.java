@@ -44,6 +44,8 @@ public class Test {
   String result =  fiveString.orElse("DEFAULT");
     System.out.println(result);
 
+    strings.removeIf(s -> s.startsWith("J"));
+
   }
 
   private static void filterWithoutStream() {

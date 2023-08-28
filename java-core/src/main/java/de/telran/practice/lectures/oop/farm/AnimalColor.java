@@ -8,6 +8,7 @@ public enum AnimalColor {
   RED,
   YELLOW,
   GREY,
+  BROWN,
   BLUE;
 
   public static AnimalColor getByNameIgnoreCase(String name) {
