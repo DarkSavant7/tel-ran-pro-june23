@@ -4,5 +4,4 @@ public record GenericPair<K, V>(
     K key,
     V value
 ) {
-
 }
