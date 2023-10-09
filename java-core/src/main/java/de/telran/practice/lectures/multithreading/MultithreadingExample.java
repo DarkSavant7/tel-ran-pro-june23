@@ -49,7 +49,7 @@ public class MultithreadingExample {
           }
           System.out.print("Hello");
           flag = 1;
-          mon.notify();
+          mon.notifyAll();
         }
       }
     } catch (InterruptedException e) {
