@@ -3,6 +3,10 @@ package de.telran.practice.lectures.multithreading;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class MultithreadingExample {
 
@@ -18,16 +22,176 @@ public class MultithreadingExample {
    * и в конце сравнить оба массива
    */
   private static final int SIZE = 100_000_000;
+  private static final Object mon = new Object();
+  private static volatile int flag = 0;
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InterruptedException {
+//    runnableExample();
+//    callableExample();
+
+//    CompletableFuture
+
+//    threadCancel();
+
+    new Thread(MultithreadingExample::printHello).start();
+    new Thread(MultithreadingExample::printWorld).start();
+    new Thread(MultithreadingExample::printSign).start();
+  }
+
+  static void printHello() {
+    try {
+      synchronized (mon) {
+        for (int i = 0; i < 5; i++) {
+          while (flag != 0) {
+//            MultithreadingExample.class.wait();
+//            this.wait();
+            mon.wait();
+          }
+          System.out.print("Hello");
+          flag = 1;
+          mon.notify();
+        }
+      }
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+
+  static void printWorld() {
+    try {
+      synchronized (mon) {
+        for (int i = 0; i < 5; i++) {
+          while (flag != 1) {
+            mon.wait();
+          }
+          System.out.print(" world");
+          flag = 2;
+          mon.notifyAll();
+        }
+      }
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+
+  static void printSign() {
+    try {
+      synchronized (mon) {
+        for (int i = 0; i < 5; i++) {
+          while (flag != 2) {
+            mon.wait();
+          }
+          System.out.println("!");
+          flag = 0;
+          mon.notifyAll();
+        }
+      }
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private static void threadCancel() throws InterruptedException {
+    var future = new FutureTask<>(MultithreadingExample::longLastingLoop);
+    new Thread(future).start();
+
+    try {
+      var result = future.get(4, TimeUnit.SECONDS);
+      System.out.println(result);
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+    } catch (TimeoutException e) {
+      future.cancel(true);
+      e.printStackTrace();
+    }
+  }
+
+  static String longLastingLoop() {
+    int iteration = 0;
+    while (!Thread.currentThread().isInterrupted()) {
+      try {
+        Thread.sleep(3000);
+        System.out.println(iteration++);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+        Thread.currentThread().interrupt();
+      }
+    }
+    return "ready";
+  }
+
+  private static void callableExample() throws InterruptedException {
+    //    var command = new Callable<String>() {
+//
+//      @Override
+//      public String call() throws Exception {
+//        return "Hello";
+//      }
+//    };
+//    var future = new FutureTask<>(command);
+//    var future = new FutureTask<>(() -> "Hello!");
+//    var future = new FutureTask<>(() -> {
+//      var result = "Hello!";
+//      System.out.println(result);
+//      return result;
+//    });
+    var future = new FutureTask<>(MultithreadingExample::longOperation);
+    new Thread(future).start();
+
+    try {
+      System.out.println(future.get(1, TimeUnit.SECONDS));
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+    } catch (TimeoutException e) {
+      future.cancel(true);
+      e.printStackTrace();
+    }
+  }
+
+  static String longOperation() {
+    try {
+      Thread.sleep(2000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    return "RESULT";
+  }
+
+
+  static String throwError() {
+    throw new RuntimeException();
+  }
+
+  private static void runnableExample() throws InterruptedException {
+    //    testArrayProcessing();
+    var tError = new Thread(MultithreadingExample::throwSomething);
+    doSomething();
+    tError.start();
+    var t1 = new Thread(MultithreadingExample::doSomething);
+    t1.start();
+    var t2 = new Thread(MultithreadingExample::doSomething);
+    t2.start();
+    var t3 = new Thread(MultithreadingExample::doSomething);
+    t3.run();
+    tError.join();
+    System.out.println("FINISH");
+  }
+
+  static void doSomething() {
+    System.out.println("Some operation from thread " + Thread.currentThread().getName());
+  }
+
+  static void throwSomething() {
+    throw new RuntimeException("AAAAAAAAAAA");
+  }
+
+  private static void testArrayProcessing() {
     float[] example = oneThreadTest();
     var datas = multiTest(1, 16, 1);
 
     for (float[] data : datas) {
       System.out.println("Arrays equals: " + Arrays.equals(example, data));
     }
-
-
   }
 
 
