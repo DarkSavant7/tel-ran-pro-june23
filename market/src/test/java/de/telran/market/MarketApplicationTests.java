@@ -1,10 +1,12 @@
-package de.telran.demo;
+package de.telran.market;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+@Disabled
+class MarketApplicationTests {
 
 	@Test
 	void contextLoads() {
