@@ -7,6 +7,12 @@
   <groupId>de.telran</groupId>
   <artifactId>tel-ran-pro-june23</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>java-core</module>
+    <module>file-manager</module>
+    <module>telegram-bot-example</module>
+  </modules>
 
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
