@@ -19,3 +19,6 @@ spring:
     encoding: UTF-8
     create-schemas: true
     schemas: market
+logging:
+  level:
+    de.telran.market: DEBUG
