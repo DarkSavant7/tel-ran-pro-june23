@@ -13,5 +13,5 @@ public interface ProductService {
 
   void deleteById(Long id);
 
-  ProductDto findByTitle(String title);
+  List<ProductDto> findByTitleLike(String title);
 }

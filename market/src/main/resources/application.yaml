@@ -22,3 +22,17 @@ spring:
 logging:
   level:
     de.telran.market: DEBUG
+springdoc:
+  webjars:
+    prefix:
+  swagger-ui:
+    path: /
+    disable-swagger-default-url: true
+    operation-sorter: method
+    enabled: true
+    operationsSorter: alpha
+    tagsSorter: alpha
+    doc-expansion: none
+  api-docs:
+    enabled: true
+    path: /api-docs.yaml

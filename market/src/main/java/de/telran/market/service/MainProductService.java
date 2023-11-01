@@ -16,7 +16,17 @@ import org.springframework.stereotype.Service;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class MainProductService implements ProductService {
 
+//  @Autowired
   ProductRepository productRepository;
+
+//  public void setProductRepository(@Autowired ProductRepository productRepository) {
+//    this.productRepository = productRepository;
+//  }
+
+
+//  public MainProductService(@Autowired ProductRepository productRepository) {
+//    this.productRepository = productRepository;
+//  }
 
   @Override
   public ProductDto create(ProductDto dto) {
@@ -48,10 +58,11 @@ public class MainProductService implements ProductService {
     productRepository.deleteById(id);
   }
 
-  //TODO make yourself
   @Override
-  public ProductDto findByTitle(String title) {
-    return null;
+  public List<ProductDto> findByTitleLike(String title) {
+    return productRepository.findAllByTitleLike(title).stream()
+        .map(this::fromEntity)
+        .toList();
   }
 
   //TODO remove from service, use mapstruct or something else

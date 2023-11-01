@@ -25,5 +25,5 @@ public interface ProductApi {
   ResponseEntity<Void> deleteById(@PathVariable(name = "id") Long id);
 
   @GetMapping("/products/by-title")//url?param1=xxx&param2=yyyy
-  ResponseEntity<ProductDto> findByTitle(@RequestParam(name = "title") String title);
+  ResponseEntity<List<ProductDto>> findByTitle(@RequestParam(name = "title") String title);
 }
