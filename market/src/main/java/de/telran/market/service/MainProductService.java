@@ -1,8 +1,11 @@
 package de.telran.market.service;
 
 import de.telran.market.dto.ProductDto;
+import de.telran.market.error.ProductNotFoundException;
 import de.telran.market.model.Product;
 import de.telran.market.repository.ProductRepository;
+import jakarta.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +32,7 @@ public class MainProductService implements ProductService {
 //  }
 
   @Override
+  @Transactional
   public ProductDto create(ProductDto dto) {
     log.debug("Saving new product {}", dto.getTitle());
     var entity = toEntity(dto);
@@ -39,9 +43,9 @@ public class MainProductService implements ProductService {
   @Override
   public ProductDto findById(Long id) {
     log.debug("Looking for the product with id {}", id);
-    var result = productRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("Product not found"));
-    return fromEntity(result);
+    return productRepository.findById(id)
+        .map(this::fromEntity)
+        .orElseThrow(() -> new ProductNotFoundException("Product not found"));
   }
 
   @Override
@@ -53,6 +57,7 @@ public class MainProductService implements ProductService {
   }
 
   @Override
+  @Transactional
   public void deleteById(Long id) {
     log.debug("Deleting the product with id {}", id);
     productRepository.deleteById(id);
@@ -61,6 +66,13 @@ public class MainProductService implements ProductService {
   @Override
   public List<ProductDto> findByTitleLike(String title) {
     return productRepository.findAllByTitleLike(title).stream()
+        .map(this::fromEntity)
+        .toList();
+  }
+
+  @Override
+  public List<ProductDto> findByPriceGreaterThan(BigDecimal price) {
+    return productRepository.findAllByPriceIsGreaterThanEqual(price).stream()
         .map(this::fromEntity)
         .toList();
   }

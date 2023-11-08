@@ -5,3 +5,7 @@ hackerrank.com
 
 
 My tg @DarkSavant
+
+Vlad Mihalcea
+
+ACID

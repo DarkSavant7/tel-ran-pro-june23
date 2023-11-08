@@ -1,7 +1,9 @@
 package de.telran.market.repository;
 
 import de.telran.market.model.Product;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +19,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
   @Query(value = "select p.* from products p where p.title like concat('%', :title, '%') ", nativeQuery = true)
   List<Product> findAllByTitleLike(@Param("title") String title);
+
+  List<Product> findAllByPriceIsGreaterThanEqual(@Param("price") BigDecimal price);
+
+  Optional<Product> findByTitle(@Param("title") String title);
 }

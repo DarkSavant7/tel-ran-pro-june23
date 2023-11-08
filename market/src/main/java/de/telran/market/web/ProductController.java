@@ -3,6 +3,7 @@ package de.telran.market.web;
 import de.telran.market.api.ProductApi;
 import de.telran.market.dto.ProductDto;
 import de.telran.market.service.ProductService;
+import java.math.BigDecimal;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+//@RequestMapping("/products")
 public class ProductController implements ProductApi {
 
 //  private static final Logger log = LoggerFactory.getLogger(ProductController.class);
@@ -58,5 +60,13 @@ public class ProductController implements ProductApi {
     return ResponseEntity
         .status(HttpStatus.OK)
         .body(productService.findByTitleLike(title));
+  }
+
+  @Override
+  public ResponseEntity<List<ProductDto>> findByPriceGreaterThan(BigDecimal price) {
+    log.debug("Product search by price {} called", price);
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body(productService.findByPriceGreaterThan(price));
   }
 }

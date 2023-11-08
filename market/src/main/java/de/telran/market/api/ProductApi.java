@@ -1,6 +1,7 @@
 package de.telran.market.api;
 
 import de.telran.market.dto.ProductDto;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,4 +27,7 @@ public interface ProductApi {
 
   @GetMapping("/products/by-title")//url?param1=xxx&param2=yyyy
   ResponseEntity<List<ProductDto>> findByTitle(@RequestParam(name = "title") String title);
+
+  @GetMapping("/products/by-price")
+  ResponseEntity<List<ProductDto>> findByPriceGreaterThan(BigDecimal price);
 }

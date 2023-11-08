@@ -1,6 +1,7 @@
 package de.telran.market.service;
 
 import de.telran.market.dto.ProductDto;
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductService {
@@ -14,4 +15,6 @@ public interface ProductService {
   void deleteById(Long id);
 
   List<ProductDto> findByTitleLike(String title);
+
+  List<ProductDto> findByPriceGreaterThan(BigDecimal price);
 }
