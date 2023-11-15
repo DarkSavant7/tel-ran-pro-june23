@@ -32,6 +32,8 @@ dependencies {
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.boot:spring-boot-starter-aop")
 //	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 	runtimeOnly("com.mysql:mysql-connector-j")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

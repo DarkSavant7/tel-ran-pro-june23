@@ -105,7 +105,7 @@
         <appender-ref ref="FILE_ERROR"/>
         <appender-ref ref="FILE_JOURNAL"/>
     </logger>
-    <logger name="de.telran.market.web.ProductController" level="TRACE" >
+    <logger name="de.telran.market.web.ProductController" level="TRACE" additivity="false" >
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE_WEB"/>
 <!--        <appender-ref ref="FILE_OVERALL"/>-->
