@@ -15,6 +15,7 @@ public interface ProductService {
   void deleteById(Long id);
 
   List<ProductDto> findByTitleLike(String title);
+  ProductDto findByTitleExact(String title);
 
   List<ProductDto> findByPriceGreaterThan(BigDecimal price);
 }

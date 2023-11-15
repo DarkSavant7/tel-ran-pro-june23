@@ -41,10 +41,19 @@ public class ProductController implements ProductApi {
 
   @Override
   public ResponseEntity<List<ProductDto>> findAll() {
-    log.debug("Product find all called");
-    return ResponseEntity
-        .status(HttpStatus.OK)
-        .body(productService.findAll());
+//   try {
+      log.debug("Product find all called");
+      return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(productService.findAll());
+//    } catch(ProductNotFoundException e) {
+//     return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//         .body(new ErrorDto("Error!", e.getMessage()));
+//    } catch (Throwable e) {
+//     log.error("Critical error:", throwable);
+//     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//         .body(new ErrorDto("Error!", "Something went wrong"));
+//   }
   }
 
   @Override

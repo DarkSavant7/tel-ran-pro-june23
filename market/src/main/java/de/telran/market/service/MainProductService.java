@@ -45,7 +45,8 @@ public class MainProductService implements ProductService {
     log.debug("Looking for the product with id {}", id);
     return productRepository.findById(id)
         .map(this::fromEntity)
-        .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+//        .orElse(new ProductDto(0L, "Zero", "", BigDecimal.ZERO));
+        .orElseThrow(() -> new ProductNotFoundException(id));
   }
 
   @Override
@@ -60,6 +61,9 @@ public class MainProductService implements ProductService {
   @Transactional
   public void deleteById(Long id) {
     log.debug("Deleting the product with id {}", id);
+    if (!productRepository.existsById(id)) {
+      throw new ProductNotFoundException(id);
+    }
     productRepository.deleteById(id);
   }
 
@@ -68,6 +72,14 @@ public class MainProductService implements ProductService {
     return productRepository.findAllByTitleLike(title).stream()
         .map(this::fromEntity)
         .toList();
+  }
+
+  @Override
+  public ProductDto findByTitleExact(String title) {
+    log.debug("Looking for the product with title {}", title);
+    return productRepository.findByTitle(title)
+        .map(this::fromEntity)
+        .orElseThrow(() -> new ProductNotFoundException(title));
   }
 
   @Override

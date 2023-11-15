@@ -2,6 +2,7 @@ package de.telran.market.web;
 
 import de.telran.market.dto.ErrorDto;
 import de.telran.market.error.ProductNotFoundException;
+import java.sql.SQLException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,12 @@ public class SmartExceptionHandler {
   ResponseEntity<ErrorDto> handleProductNotFoundException(ProductNotFoundException exception) {
     return ResponseEntity.status(HttpStatus.NOT_FOUND)
         .body(new ErrorDto("Error!", exception.getMessage()));
+  }
+
+  @ExceptionHandler(SQLException.class)
+  ResponseEntity<ErrorDto> handleProductNotFoundException(SQLException exception) {
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(new ErrorDto("Error!", "Something went wrong!"));
   }
 
   @ExceptionHandler(Throwable.class)
