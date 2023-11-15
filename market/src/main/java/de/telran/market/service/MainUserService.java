@@ -9,15 +9,14 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-@Slf4j
+//@Slf4j
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class MainUserService implements UserService {
-
+  private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UserService.class);
   UserRepository userRepository;
 
   @Override

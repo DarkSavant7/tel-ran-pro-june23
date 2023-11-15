@@ -17,6 +17,7 @@
             <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n</pattern>
         </encoder>
     </appender>
+
     <appender name="FILE_OVERALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${logPath}full.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
