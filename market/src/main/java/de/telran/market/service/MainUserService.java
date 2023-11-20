@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class MainUserService implements UserService {
-  private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UserService.class);
+  private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MainUserService.class);
   UserRepository userRepository;
 
   @Override

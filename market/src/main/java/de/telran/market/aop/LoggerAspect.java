@@ -1,11 +1,8 @@
 package de.telran.market.aop;
 
-import de.telran.market.dto.ProductDto;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -45,18 +42,18 @@ public class LoggerAspect {
         log.info("[AOP] AFTER: Product service method called signature: {}", joinPoint.getSignature());
     }
 
-        @Around("execution(public de.telran.market.dto.ProductDto de.telran.market.service.MainProductService.findById(Long))")
-        public Object beforeUserEditProduct(ProceedingJoinPoint joinPoint) throws Throwable {
-            log.info("Aspect fake method called: {}", joinPoint.getSignature());
-            var args = joinPoint.getArgs();
-            var currentId = (Long) args[0];
-//            var result = (ProductDto) joinPoint.proceed();
-//            var result = (ProductDto) joinPoint.proceed();
-            var result = (ProductDto) joinPoint.proceed(new Object[]{currentId + 1});
-            log.info("Result was {}", result);
-//            return ProductDto.builder().title("Hello from aspect").build();
-        return result;
-        }
+//        @Around("execution(public de.telran.market.dto.ProductDto de.telran.market.service.MainProductService.findById(Long))")
+//        public Object beforeUserEditProduct(ProceedingJoinPoint joinPoint) throws Throwable {
+//            log.info("Aspect fake method called: {}", joinPoint.getSignature());
+//            var args = joinPoint.getArgs();
+//            var currentId = (Long) args[0];
+////            var result = (ProductDto) joinPoint.proceed();
+////            var result = (ProductDto) joinPoint.proceed();
+//            var result = (ProductDto) joinPoint.proceed(new Object[]{currentId + 1});
+//            log.info("Result was {}", result);
+////            return ProductDto.builder().title("Hello from aspect").build();
+//        return result;
+//        }
 
 //    @Before("getName()")
 ////    @After("getName()")

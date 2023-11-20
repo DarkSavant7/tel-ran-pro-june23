@@ -28,6 +28,7 @@ public class ProductController implements ProductApi {
     log.debug("Product create called");
     return ResponseEntity
         .status(HttpStatus.CREATED)
+        .header("test-header", "CHECK")
         .body(productService.create(dto));
   }
 
