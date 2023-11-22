@@ -35,7 +35,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-aop")
 	implementation("org.mapstruct:mapstruct:1.6.0.Beta1")
-	implementation("org.mapstruct:mapstruct-processor:1.6.0.Beta1")
+	annotationProcessor("org.mapstruct:mapstruct-processor:1.6.0.Beta1")
 	implementation("org.projectlombok:lombok-mapstruct-binding:0.2.0")
 //	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 	runtimeOnly("com.mysql:mysql-connector-j")
