@@ -1,5 +1,7 @@
 package de.telran.market.service;
 
+import static de.telran.market.service.RoleService.USER_ROLE_ID;
+
 import de.telran.market.dto.UserDto;
 import de.telran.market.model.Role;
 import de.telran.market.model.User;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class MainUserService implements UserService {
   private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MainUserService.class);
   UserRepository userRepository;
+  RoleService roleService;
 
   @Override
   @Transactional
@@ -28,7 +31,7 @@ public class MainUserService implements UserService {
         .phone(dto.getPhone())
         .firstName(dto.getFirstName())
         .email(dto.getEmail())
-        .roles(List.of(Role.builder().id(1L).build()))
+        .roles(List.of(roleService.getReference(USER_ROLE_ID)))
         .password(dto.getPassword())
         .build();
 

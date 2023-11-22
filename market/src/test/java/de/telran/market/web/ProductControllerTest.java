@@ -1,6 +1,7 @@
 package de.telran.market.web;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -14,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -36,10 +36,11 @@ class ProductControllerTest {
   private ProductService productService;
 
   @Container
-  private static MySQLContainer container = new MySQLContainer<>(DockerImageName.parse("mysql:latest"))
+  private static MySQLContainer container = new MySQLContainer<>(
+      DockerImageName.parse("mysql:latest"))
       .withDatabaseName("market")
-				.withUsername("admin")
-				.withPassword("admin");
+      .withUsername("admin")
+      .withPassword("admin");
 
   @DynamicPropertySource
   static void properties(DynamicPropertyRegistry registry) {
@@ -60,11 +61,14 @@ class ProductControllerTest {
           }
         """;
 
-    var builder = MockMvcRequestBuilders.post("/products")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(request);
+//    var builder = post("/products")
+//        .contentType(MediaType.APPLICATION_JSON)
+//        .content(request);
 
-    mockMvc.perform(builder)
+//    mockMvc.perform(builder)
+    mockMvc.perform(post("/products")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(request))
         .andExpect(status().isCreated())
         .andExpect(header().exists("test-header"))
         .andExpect(jsonPath("$.title").value("swagger product"))

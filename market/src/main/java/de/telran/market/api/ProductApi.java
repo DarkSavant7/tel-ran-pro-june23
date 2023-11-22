@@ -1,8 +1,10 @@
 package de.telran.market.api;
 
 import de.telran.market.dto.ProductDto;
+import de.telran.market.dto.ProductShortDto;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,4 +32,10 @@ public interface ProductApi {
 
   @GetMapping("/products/by-price")
   ResponseEntity<List<ProductDto>> findByPriceGreaterThan(BigDecimal price);
+
+  @GetMapping("/products/shorts")
+  Set<ProductShortDto> findAllShorts();
+
+  @GetMapping("/products/projections")
+  Set<ProductShortDto> findAllProjections();
 }

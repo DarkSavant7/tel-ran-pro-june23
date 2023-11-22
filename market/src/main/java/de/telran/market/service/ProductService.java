@@ -1,8 +1,10 @@
 package de.telran.market.service;
 
 import de.telran.market.dto.ProductDto;
+import de.telran.market.dto.ProductShortDto;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 public interface ProductService {
 
@@ -18,4 +20,6 @@ public interface ProductService {
   ProductDto findByTitleExact(String title);
 
   List<ProductDto> findByPriceGreaterThan(BigDecimal price);
+  Set<ProductShortDto> findAllShorts();
+  Set<ProductShortDto> findAllProjections();
 }

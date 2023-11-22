@@ -2,9 +2,11 @@ package de.telran.market.web;
 
 import de.telran.market.api.ProductApi;
 import de.telran.market.dto.ProductDto;
+import de.telran.market.dto.ProductShortDto;
 import de.telran.market.service.ProductService;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -78,5 +80,15 @@ public class ProductController implements ProductApi {
     return ResponseEntity
         .status(HttpStatus.OK)
         .body(productService.findByPriceGreaterThan(price));
+  }
+
+  @Override
+  public Set<ProductShortDto> findAllShorts() {
+    return productService.findAllShorts();
+  }
+
+  @Override
+  public Set<ProductShortDto> findAllProjections() {
+    return productService.findAllProjections();
   }
 }

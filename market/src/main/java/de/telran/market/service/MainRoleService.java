@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class MainRoleService implements RoleService {
-  private static final Long USER_ROLE_ID = 1L;
   RoleRepository roleRepository;
-
 
   @Override
   public Role get(Long id) {
