@@ -3,7 +3,7 @@ package de.telran.market.service;
 import de.telran.market.dto.ProductDto;
 import de.telran.market.dto.ProductShortDto;
 import de.telran.market.error.ProductNotFoundException;
-import de.telran.market.mapper.ProductMapstructMapper;
+import de.telran.market.model.Product;
 import de.telran.market.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
@@ -24,7 +24,7 @@ public class MainProductService implements ProductService {
 
 //  @Autowired
   ProductRepository productRepository;
-  ProductMapstructMapper mapper;
+//  ProductMapstructMapper mapper;
 
 //  public void setProductRepository(@Autowired ProductRepository productRepository) {
 //    this.productRepository = productRepository;
@@ -39,16 +39,16 @@ public class MainProductService implements ProductService {
   @Transactional
   public ProductDto create(ProductDto dto) {
     log.debug("Saving new product {}", dto.getTitle());
-    var entity = mapper.toEntity(dto);
+    var entity = this.toEntity(dto);
     var saved = productRepository.save(entity);
-    return mapper.fromEntity(saved);
+    return this.fromEntity(saved);
   }
 
   @Override
   public ProductDto findById(Long id) {
     log.debug("Looking for the product with id {}", id);
     return productRepository.findById(id)
-        .map(mapper::fromEntity)
+        .map(this::fromEntity)
 //        .orElse(new ProductDto(0L, "Zero", "", BigDecimal.ZERO));
         .orElseThrow(() -> new ProductNotFoundException(id));
   }
@@ -57,7 +57,7 @@ public class MainProductService implements ProductService {
   public List<ProductDto> findAll() {
     log.debug("Looking for all the products");
     return productRepository.findAll().stream()
-        .map(mapper::fromEntity)
+        .map(this::fromEntity)
         .toList();
   }
 
@@ -74,7 +74,7 @@ public class MainProductService implements ProductService {
   @Override
   public List<ProductDto> findByTitleLike(String title) {
     return productRepository.findAllByTitleLike(title).stream()
-        .map(mapper::fromEntity)
+        .map(this::fromEntity)
         .toList();
   }
 
@@ -82,14 +82,14 @@ public class MainProductService implements ProductService {
   public ProductDto findByTitleExact(String title) {
     log.debug("Looking for the product with title {}", title);
     return productRepository.findByTitle(title)
-        .map(mapper::fromEntity)
+        .map(this::fromEntity)
         .orElseThrow(() -> new ProductNotFoundException(title));
   }
 
   @Override
   public List<ProductDto> findByPriceGreaterThan(BigDecimal price) {
     return productRepository.findAllByPriceIsGreaterThanEqual(price).stream()
-        .map(mapper::fromEntity)
+        .map(this::fromEntity)
         .toList();
   }
 
@@ -106,13 +106,13 @@ public class MainProductService implements ProductService {
   }
 
 //  //TODO remove from service, use mapstruct or something else
-//  private ProductDto fromEntity(Product product) {
-//    return new ProductDto(product.getId(), product.getTitle(), product.getDescription(),
-//        product.getPrice());
-//  }
-//
-//  private Product toEntity(ProductDto dto) {
-//    return new Product(dto.getId(), dto.getTitle(), dto.getDescription(),
-//        dto.getPrice());
-//  }
+  private ProductDto fromEntity(Product product) {
+    return new ProductDto(product.getId(), product.getTitle(), product.getDescription(),
+        product.getPrice());
+  }
+
+  private Product toEntity(ProductDto dto) {
+    return new Product(dto.getId(), dto.getTitle(), dto.getDescription(),
+        dto.getPrice());
+  }
 }

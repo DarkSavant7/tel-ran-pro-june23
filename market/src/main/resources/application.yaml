@@ -26,7 +26,7 @@ springdoc:
   webjars:
     prefix:
   swagger-ui:
-    path: /
+    path: /market/v3/swagger-ui.html
     disable-swagger-default-url: true
     operation-sorter: method
     enabled: true
@@ -35,4 +35,8 @@ springdoc:
     doc-expansion: none
   api-docs:
     enabled: true
-    path: /api-docs.yaml
+    path: /market/v3/api-docs
+jwt:
+  secret: ihjfjfnvjofnvjerfnvjenvjernvjelrnvjervjnerjlnverjlnvjerbv
+  expiration:
+    minutes: 200
