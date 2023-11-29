@@ -51,7 +51,7 @@ class ProductControllerTest {
   }
 
   @Test
-  @WithMockUser(username = "TEST_VASYA", roles = {"ROLE_ADMIN"})
+  @WithMockUser(username = "TEST_VASYA", roles = {"ADMIN"})
   void createProductTest() throws Exception {
 //    productController.create()
 
