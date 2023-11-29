@@ -13,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -26,6 +27,7 @@ public class ProductController implements ProductApi {
   ProductService productService;
 
   @Override
+  @Secured("ROLE_ADMIN")
   public ResponseEntity<ProductDto> create(ProductDto dto) {
     log.debug("Product create called");
     return ResponseEntity
