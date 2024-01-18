@@ -1,5 +1,6 @@
 package de.telran.market.repository;
 
+import de.telran.market.dto.DemoProductWithUserDto;
 import de.telran.market.dto.ProductShortDto;
 import de.telran.market.model.Product;
 import de.telran.market.model.projection.ProductProjection;
@@ -27,9 +28,36 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
   Optional<Product> findByTitle(@Param("title") String title);
 
-  @Query(value = "select new de.telran.market.dto.ProductShortDto(p.id, p.title) from Product p")
+  Optional<Product> findOneByTitleAndDescriptionOrPriceIsLessThanEqual(@Param("title") String title,
+      @Param("description") String description, @Param("price") BigDecimal price);
+
+  @Query(value = "select new de.telran.market.dto.ProductShortDto(prod.id, prod.title) from Product prod", nativeQuery = false)
   Set<ProductShortDto> findAllShorts();
 
   @Query(value = "select p.id as id, p.title as title from products p", nativeQuery = true)
   Set<ProductProjection> findAllProjections();
+
+  @Query("""
+             SELECT * FROM products
+             OFFSET :offset_value
+             LIMIT :limit_value
+      """)
+  Set<Product> selectWithPagination(@Param("offset_value") long offset,
+      @Param("limit_value") int limit);
+
+//  String EXAMPLE = "    select new de.telran.market.dto.DemoProductWithUserDto(prod.id, prod.title, u.email, u.firstName)"
+//      + "        from Product prod"
+//      + "        join User u on u.id = prod.id";
+
+  @Query(value = """
+              select new de.telran.market.dto.DemoProductWithUserDto(prod.id, prod.title, u.email, u.firstName)
+              from Product prod
+              join User u on u.id = prod.id
+      """, nativeQuery = false)
+  Set<DemoProductWithUserDto> demoFindAllJoiningUsers();
+
+//->>, -> "name"
+//  @>
+  @Query(value = "select prod from Product prod")
+  Set<Product> findAllExample();
 }

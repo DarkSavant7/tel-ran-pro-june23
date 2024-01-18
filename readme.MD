@@ -15,3 +15,7 @@ Logback doc: https://logback.qos.ch/manual/configuration.html
 
 
 https://www.elastic.co/kibana
+
+
+
+https://vladmihalcea.com/
